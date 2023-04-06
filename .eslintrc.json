@@ -5,9 +5,10 @@
   ],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": [ "*.ts" ],
+      "parserOptions": {
+        "project": ["tsconfig.(app|spec).json"]
+      },
       "extends": [
 				"plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
