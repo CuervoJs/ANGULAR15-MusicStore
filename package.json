@@ -10,8 +10,7 @@
     "lint": "ng lint",
     "format": "prettier --write \"./src/**/*.{ts,json,html,scss}\"",
     "prepare": "husky install",
-    "lint-format": "(npm run format) -and  (ng lint --fix)",
-    "pre-commit": "(npm run lint-format) -and (git add .)"
+    "pre-commit": "(npm run ((npm run format) -and  (ng lint --fix))) and (git add .)"
   },
   "private": true,
   "dependencies": {
