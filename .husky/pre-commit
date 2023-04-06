@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
+
 # Esta configuración hace que el formateo se aplique a todos los archivos de tu proyecto
 # npm run pre-commit 
 
