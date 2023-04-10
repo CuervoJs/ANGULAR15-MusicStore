@@ -41,7 +41,7 @@ export const routes: Routes = [
 		loadComponent: () => import('./pages/buy-page/buy-page.component')
 	},
 	{
-		path: PATH_MAINTENANCE_PAGES.onlyPath, // www.mitocode.com/maintenance -> Asi se formaria la url
+		path: PATH_MAINTENANCE_PAGES.onlyPath, // www.mitocode.com/maintenance --> Asi se formaria la url
 		// loadChildren: () => import('./pages/maintenance/maintenance-routing.module').then((m) => m.MaintenanceRoutingModule)
 		loadChildren: () => import('./pages/maintenance/maintenance.routes').then((m) => m.routes)
 	},
