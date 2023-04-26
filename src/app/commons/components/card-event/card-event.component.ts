@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ICardEvent } from './../models/components.interface';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -6,6 +8,15 @@ import { MatCardModule } from '@angular/material/card';
 	selector: 'app-card-event',
 	templateUrl: './card-event.component.html',
 	styleUrls: ['./card-event.component.scss'],
-	imports: [MatCardModule]
+	imports: [MatCardModule, CommonModule]
 })
-export class CardEventComponent {}
+export class CardEventComponent {
+	@Input() event?: ICardEvent;
+	@Output() clickCard = new EventEmitter<ICardEvent>();
+	isSelect = false;
+
+	clickEvent(): void {
+		this.isSelect = true;
+		this.clickCard.emit(this.event);
+	}
+}
