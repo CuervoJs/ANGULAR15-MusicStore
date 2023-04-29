@@ -19,8 +19,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 		console.log('ngOnInit AppComponent');
 		//PUEDES HACER PEDIDOS DESDE AQUI
-		fetch('url').then((response) => {
-			console.log(response);
-		});
+		//fetch('url').then((response) => {
+		//	console.log(response);
+		//});
 	}
 }

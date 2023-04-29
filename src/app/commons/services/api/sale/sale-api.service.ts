@@ -31,7 +31,20 @@ export class SaleApiService {
 	}
 
 	getSalesUser(filter: string, page?: number, rows?: number): Observable<IResponse<IResponseListSales[]>> {
-		return this._httpClient.get<IResponse<IResponseListSales[]>>(URL_LIST_SALE);
+		let params = new HttpParams();
+
+		if (filter) {
+			params = params.set('filter', filter);
+		}
+
+		if (page) {
+			params = params.set('page', page);
+		}
+
+		if (rows) {
+			params = params.set('pageSize', rows);
+		}
+		return this._httpClient.get<IResponse<IResponseListSales[]>>(URL_LIST_SALE, { params });
 	}
 
 	getListSales(request: IRequestListSalesByGenre): Observable<IResponse<IResponseListSales[]>> {

@@ -18,12 +18,16 @@ export interface IRequestListSalesByGenre {
 //#region ListSales
 export interface IResponseListSales {
 	saleId: number;
-	customerName: string;
-	concertName: string;
-	ticketsQuantity: number;
-	totalPrice: number;
+	dateEvent: string;
+	timeEvent: string;
+	genre: string;
+	imageUrl: string;
+	title: string;
+	operationNumber: string;
+	fullName: string;
+	quantity: number;
 	saleDate: string;
-	concertDate: string;
+	total: number;
 }
 //#endregion
 

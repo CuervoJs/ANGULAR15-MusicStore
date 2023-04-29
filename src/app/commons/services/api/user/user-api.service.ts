@@ -19,7 +19,7 @@ export const URL_REGISTER = URL_USER + '/Register';
 export const URL_SEND_TOKEN_RESET_PASSWORD = URL_USER + '/SendTokenToResetPassword';
 export const URL_RESET_PASSWORD = URL_USER + '/ResetPassword';
 
-const URL_CHANGE_PASSWORD = URL_USER + '/ChangePassword';
+export const URL_CHANGE_PASSWORD = URL_USER + '/ChangePassword';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {

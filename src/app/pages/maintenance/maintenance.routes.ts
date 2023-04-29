@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
 import { PATH_MAINTENANCE_PAGES } from '../../commons/config/path-pages';
+import { AUTH_GUARD, MAINTENANCE_GUARD } from '../../commons/guards/function.guard';
 import { MaintenanceComponent } from './maintenance.component';
 
 export const routes: Routes = [
 	{
 		path: '', //www.mitocode.com/maintenance
+		canActivate: [MAINTENANCE_GUARD],
+		canActivateChild: [AUTH_GUARD],
 		component: MaintenanceComponent,
 		children: [
 			{
@@ -16,6 +19,11 @@ export const routes: Routes = [
 				path: PATH_MAINTENANCE_PAGES.events.onlyPath,
 				title: 'Eventos',
 				loadComponent: () => import('./maintenance-events-page/maintenance-events-page.component')
+			},
+			{
+				path: PATH_MAINTENANCE_PAGES.genres.onlyPath,
+				title: 'Generos',
+				loadComponent: () => import('./maintenance-genres-page/maintenance-genres-page.component')
 			},
 			{
 				path: PATH_MAINTENANCE_PAGES.reports.onlyPath,

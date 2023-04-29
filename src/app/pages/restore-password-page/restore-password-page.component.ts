@@ -35,7 +35,7 @@ export default class RestorePasswordPageComponent {
 		if (this._activatedRoute.snapshot.queryParams) {
 			console.log(this._activatedRoute.snapshot.queryParams);
 		}
-
+		console.log(`Token :${this._token}, Email : ${this._email}`);
 		// en caso no existiera eltoken o el email enviaremos al usuario a la pagina de "Recuperar contraseña"
 		if (!this._token || !this._email) {
 			void this._router.navigateByUrl(PATHS_AUTH_PAGES.recoverPasswordPage.withSlash);

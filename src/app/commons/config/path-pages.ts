@@ -68,6 +68,7 @@ export const PATH_MAINTENANCE_PAGES = {
 //#region  PATH MY ACCOUNT
 const myAccountPage = 'my-account';
 const myAccountChangePasswordPage = 'change-password';
+const myAccountBuyPage = 'buy';
 
 export const PATH_MY_ACCOUNT_PAGES = {
 	withSlash: `/${myAccountPage}`,
@@ -76,6 +77,10 @@ export const PATH_MY_ACCOUNT_PAGES = {
 	changePassword: {
 		withSlash: `/${myAccountPage}/${myAccountChangePasswordPage}`,
 		onlyPath: myAccountChangePasswordPage
+	},
+	buy: {
+		withSlash: `/${myAccountPage}/${myAccountBuyPage}`,
+		onlyPath: myAccountBuyPage
 	}
 };
 //#endregion

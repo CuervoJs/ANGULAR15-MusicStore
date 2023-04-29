@@ -9,10 +9,12 @@ import {
 } from './commons/config/path-pages';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { BUY_GUARD } from './commons/guards/function.guard';
 
 export const routes: Routes = [
 	{
 		path: '', // www.mitocode.com
+		canActivate: [BUY_GUARD],
 		component: HomePageComponent
 	},
 	{
@@ -38,6 +40,7 @@ export const routes: Routes = [
 	{
 		path: PATH_BUY_PAGES.buyPage.onlyPath,
 		title: 'Compra de entradas',
+		canActivate: [BUY_GUARD],
 		loadComponent: () => import('./pages/buy-page/buy-page.component')
 	},
 	{
@@ -47,7 +50,8 @@ export const routes: Routes = [
 	},
 	{
 		path: PATH_MY_ACCOUNT_PAGES.onlyPath,
-		loadComponent: () => import('./pages/my-account/my-account.component')
+		//AÑADIR LO QUE ES EL m.routes y crear el my-account.routes.ts ASI LO HACEMOS PAPUS  ./pages/my-account/my-account.component
+		loadChildren: () => import('./pages/my-account/my-account.routes').then((m) => m.routes)
 	},
 	{
 		title: '404 | no se encuentra la página',
@@ -61,7 +65,7 @@ export const routes: Routes = [
 	}
 ];
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { useHash: true })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {}

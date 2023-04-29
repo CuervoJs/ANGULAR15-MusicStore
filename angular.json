@@ -29,9 +29,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss", "node_modules/@costlydeveloper/ngx-awesome-popup/styles/theme.css"],
             "scripts": []
           },
           "configurations": {
@@ -77,6 +75,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": { "proxyConfig": "proxy.conf.json"},
           "configurations": {
             "production": {
               "browserTarget": "music-store:build:production"

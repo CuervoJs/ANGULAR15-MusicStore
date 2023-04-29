@@ -1,8 +1,14 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { PATHS_AUTH_PAGES, PATH_MAINTENANCE_PAGES } from 'src/app/commons/config/path-pages';
+import { PATHS_AUTH_PAGES, PATH_MAINTENANCE_PAGES, PATH_MY_ACCOUNT_PAGES } from 'src/app/commons/config/path-pages';
 import { ChannelHeaderService } from 'src/app/commons/services/local/channel-header.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { UserApiService } from 'src/app/commons/services/api/user/user-api.service';
+import { IDataUser } from 'src/app/commons/models/data-user';
+import { IResponseLogin } from 'src/app/commons/services/api/user/user-api-model.interface';
+import { SessionStorageService } from 'src/app/commons/services/local/storage/storage.service';
+import { EMAIL_WEB_STORAGE, KEYS_WEB_STORAGE } from 'src/app/commons/utils/enums';
+import { LocalStorageService } from 'src/app/commons/services/local/storage/local-storage.service';
 
 @Component({
 	selector: 'app-login-page',
@@ -13,6 +19,9 @@ export class LoginPageComponent implements OnInit {
 	private _Router = inject(Router);
 	private _channelHeaderService = inject(ChannelHeaderService);
 	private _formBuilder = inject(FormBuilder);
+	private _userApiService = inject(UserApiService);
+	private _sessionStorageService = inject(SessionStorageService);
+	private _localStorageService = inject(LocalStorageService);
 	//constructor(private _Router: Router, private _channelHeaderService: ChannelHeaderService) {}
 
 	title = 'INICIO DE SESIÓN';
@@ -31,10 +40,19 @@ export class LoginPageComponent implements OnInit {
 	});
 
 	clickLogin(): void {
-		console.log(this.formGroup.getRawValue());
 		if (this.formGroup.valid) {
-			this._channelHeaderService.showUser(true);
-			void this._Router.navigateByUrl(PATH_MAINTENANCE_PAGES.withSlash);
+			const { email, password } = this.formGroup.getRawValue();
+			this.disabledButton = true;
+
+			this._userApiService.login({ userName: email, password }).subscribe({
+				next: (response) => {
+					this._saveDataUserAndRedirect(response);
+				},
+				error: () => {
+					//console.log('dasda');
+					this.disabledButton = false;
+				}
+			});
 		}
 		//OBTENER EL VALOR DE UN COMPONENTE
 		//console.log(this.formGroup.controls.email.value);
@@ -43,5 +61,25 @@ export class LoginPageComponent implements OnInit {
 		//console.log(this.formGroup.invalid);
 		//console.log(this.formGroup.pending);
 		//console.log(this.formGroup.disabled);
+	}
+
+	private _saveDataUserAndRedirect(response: IResponseLogin): void {
+		const dataUser: IDataUser = {
+			token: response.token,
+			fullName: response.fullName,
+			isAdmin: response.roles[0] === 'Administrador'
+		};
+		const { email, password } = this.formGroup.getRawValue();
+		this._sessionStorageService.setItem(KEYS_WEB_STORAGE.DATA_USER, dataUser);
+		this._localStorageService.setItem(EMAIL_WEB_STORAGE.EMAIL_USER, email);
+		this._redirectUser(dataUser.isAdmin);
+		const valueStorage = this._sessionStorageService.getItem<IDataUser>(KEYS_WEB_STORAGE.DATA_USER);
+		console.log(valueStorage);
+	}
+
+	private _redirectUser(isAdmin: boolean): void {
+		const url = isAdmin ? PATH_MAINTENANCE_PAGES.withSlash : PATH_MY_ACCOUNT_PAGES.withSlash;
+		this._Router.navigateByUrl(url);
+		this._channelHeaderService.showUser(true);
 	}
 }
